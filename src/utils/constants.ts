@@ -10,5 +10,14 @@ export const options = {
 };
 export const NOW_PLAYING_LIST =
   "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
+
+export const POPULAR_MOVIES =
+  "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
 export const GET_VIDEO_BY_MOVIE_ID =
   "https://api.themoviedb.org/3/movie/{movie_id}/videos";
+export const TOP_RATED =
+  "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
+export const UP_COMING_MOVIES =
+  "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+
+export const IMAGE_URL = "https://image.tmdb.org/t/p/w780";

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
 
 type MovieType = {
   id: number;
@@ -17,10 +16,14 @@ type TrailerType = {
 type stateType = {
   nowPlayingMovies: MovieType[];
   trailer: TrailerType;
+  popularMovies: MovieType[];
+  upComingMovies: MovieType[];
 };
 const initialState: stateType = {
   nowPlayingMovies: [],
   trailer: { id: "", key: "", type: "" },
+  popularMovies: [],
+  upComingMovies: [],
 };
 
 const moviesSlice = createSlice({
@@ -40,7 +43,20 @@ const moviesSlice = createSlice({
         trailer: action.payload,
       };
     },
+    addPopularMovies: (state, action: PayloadAction<MovieType[]>) => {
+      return {
+        ...state,
+        popularMovies: action.payload,
+      };
+    },
+    addUpComingMovies: (state, action: PayloadAction<MovieType[]>) => {
+      return {
+        ...state,
+        upComingMovies: action.payload,
+      };
+    },
   },
 });
-export const { storeMovies, addTrailer } = moviesSlice.actions;
+export const { storeMovies, addTrailer, addPopularMovies, addUpComingMovies } =
+  moviesSlice.actions;
 export default moviesSlice.reducer;

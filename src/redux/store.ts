@@ -13,6 +13,8 @@ export type RootState = {
     movies: {
       nowPlayingMovies: any[];
       trailer: any;
+      popularMovies: any;
+      upComingMovies: any;
     };
   };
 };

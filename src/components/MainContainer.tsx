@@ -8,7 +8,7 @@ const MainContainer = () => {
     (store: RootState) => store.reducer.movies?.nowPlayingMovies
   );
   if (movies.length === 0) return null;
-  const mainMovie = movies[0];
+  const mainMovie = movies[1];
   console.log(mainMovie);
   const { title, overview, id } = mainMovie;
   return (
