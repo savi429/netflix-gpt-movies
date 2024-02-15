@@ -21,3 +21,8 @@ export const UP_COMING_MOVIES =
   "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
 
 export const IMAGE_URL = "https://image.tmdb.org/t/p/w780";
+export const SUPPORTED_LANGUAGES = [
+  { identifier: "en", name: "English" },
+  { identifier: "hindi", name: "Hindi" },
+  { identifier: "spanish", name: "Spanish" },
+];

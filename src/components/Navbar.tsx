@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "./../utils/firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import logo from "./../assets/Netflix_Logo_PMS.png";
 import { removeUser } from "../redux/userSlice";
-import { USER_LOGO } from "./../utils/constants";
+import { SUPPORTED_LANGUAGES, USER_LOGO } from "./../utils/constants";
+import { changeLanguage } from "../redux/configSlice";
+import { RootState } from "../redux/store";
 const Navbar = () => {
   const dispatch = useDispatch();
+  const langKey = useSelector((store: RootState) => store.reducer.config.lang);
   const [isOpen, setIsOpen] = useState(false);
   const handleUserDropDown = () => {
     setIsOpen(!isOpen);
@@ -24,6 +27,9 @@ const Navbar = () => {
         dispatch(removeUser());
       })
       .catch((error) => {});
+  };
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(changeLanguage(e.target.value));
   };
   return (
     <div className="z-10 p-6 bg-gradient-to-b from-black absolute text-white w-screen">
@@ -52,10 +58,25 @@ const Navbar = () => {
           </li>
         </ul>
         <ul className="flex gap-5 items-center">
-          <li>Search</li>
+          <li>
+            <Link to="/search">Search</Link>
+          </li>
           <li>
             <div className="relative mr-10">
-              Bell
+              <select
+                onChange={handleLanguageChange}
+                className="p-2 bg-gray m-2 bg-gray-500 text-white"
+              >
+                {SUPPORTED_LANGUAGES.map((lang, index) => (
+                  <option
+                    key={lang.identifier}
+                    value={lang.identifier}
+                    selected={lang.identifier === langKey ? true : false}
+                  >
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
               {/* <div className="notifications absolute right-0 bg-black opacity-85 text-white cursor-pointer">
                 <ul>
                   <li>Notification 1</li>

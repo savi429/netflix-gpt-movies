@@ -11,6 +11,7 @@ import { RootState } from "./redux/store";
 import { useNavigate } from "react-router-dom";
 import { FC, ReactNode } from "react";
 import Browse from "./components/Browse";
+import Search from "./components/Search";
 interface AuthProps {
   children: ReactNode;
   type: "private" | "public";
@@ -38,13 +39,25 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Login />,
+        element: (
+          <AuthComponent type="public">
+            <Login />
+          </AuthComponent>
+        ),
       },
       {
         path: "/browse",
         element: (
           <AuthComponent type="private">
             <Browse />
+          </AuthComponent>
+        ),
+      },
+      {
+        path: "/search",
+        element: (
+          <AuthComponent type="private">
+            <Search />
           </AuthComponent>
         ),
       },

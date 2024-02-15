@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import moviesReducer from "./moviesSlice";
 import userReducer from "./userSlice";
+import configReducer from "./configSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 export type RootState = {
@@ -16,6 +17,9 @@ export type RootState = {
       popularMovies: any;
       upComingMovies: any;
     };
+    config: {
+      lang: string;
+    };
   };
 };
 const persistConfig = {
@@ -25,6 +29,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   movies: moviesReducer,
   user: userReducer,
+  config: configReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
