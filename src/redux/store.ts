@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import moviesReducer from "./moviesSlice";
 import userReducer from "./userSlice";
 import configReducer from "./configSlice";
+import gptReducer from "./gptSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 export type RootState = {
@@ -20,6 +21,10 @@ export type RootState = {
     config: {
       lang: string;
     };
+    gpt: {
+      searchResults: any[];
+      movieNames: string[];
+    };
   };
 };
 const persistConfig = {
@@ -30,6 +35,7 @@ const rootReducer = combineReducers({
   movies: moviesReducer,
   user: userReducer,
   config: configReducer,
+  gpt: gptReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({

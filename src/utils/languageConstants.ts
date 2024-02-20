@@ -10,7 +10,7 @@ const lang: LangType = {
     signup: "Sign Up",
     searchPlaceHolder: "What would you like to watch you today?",
   },
-  hindi: {
+  hi: {
     search: "खोज",
     login: "लॉग इन",
     signup: "साइन अप करें",

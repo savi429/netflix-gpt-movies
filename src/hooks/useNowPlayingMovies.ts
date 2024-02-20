@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import { options, NOW_PLAYING_LIST } from "./../utils/constants";
 import { storeMovies } from "../redux/moviesSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const useNowPlayingMovies = () => {
   const dispatch = useDispatch();
+  const nowPlayingMovies = useSelector(
+    (store: RootState) => store.reducer.movies?.nowPlayingMovies
+  );
   useEffect(() => {
     const getNowPlayingMovies = async () => {
       try {
@@ -15,7 +19,7 @@ const useNowPlayingMovies = () => {
         console.log("err", err);
       }
     };
-    getNowPlayingMovies();
+    !nowPlayingMovies && getNowPlayingMovies();
   }, []);
 };
 

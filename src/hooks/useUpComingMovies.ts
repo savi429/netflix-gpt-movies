@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import { UP_COMING_MOVIES, options } from "../utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUpComingMovies } from "./../redux/moviesSlice";
+import { RootState } from "../redux/store";
 
 const useUpComingMovies = () => {
   const dispatch = useDispatch();
+  const upComingMovies = useSelector(
+    (store: RootState) => store.reducer.movies?.upComingMovies
+  );
   useEffect(() => {
     const getUpComingMovies = async () => {
       try {
@@ -16,7 +20,7 @@ const useUpComingMovies = () => {
         console.log(err);
       }
     };
-    getUpComingMovies();
+    !upComingMovies && getUpComingMovies();
   }, []);
 };
 

@@ -6,6 +6,7 @@ type MovieCardType = {
 };
 const MovieCard = ({ movie }: MovieCardType) => {
   const { title, id, overview, poster_path } = movie;
+  if (!poster_path) return null;
   return (
     <div>
       <div className="w-48 pr-6">
