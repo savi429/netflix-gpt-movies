@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// type userState = {
-//   loggin: boolean;
-// };
-// const initialState: userState = {
-//   loggin: false,
-// };
+import { UserType } from "../types/App.types";
+const initialState: UserType = {
+  uid: "",
+  email: "",
+  displayName: "",
+};
 const userSlice = createSlice({
   name: "user",
-  initialState: null,
+  initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<any>) => {
+    addUser: (state, action: PayloadAction<UserType>) => {
       return action.payload;
     },
-    removeUser: (state, action: PayloadAction) => {
-      return null;
+    removeUser: (state) => {
+      return initialState;
     },
   },
 });

@@ -1,4 +1,4 @@
-import usePopularMovies from "../hooks/usePopularMovies";
+import usePopularMovies from "../hooks/usePopularMovies1";
 import useUpComingMovies from "../hooks/useUpComingMovies";
 import useNowPlayingMovies from "./../hooks/useNowPlayingMovies";
 import MainContainer from "./MainContainer";
@@ -11,15 +11,6 @@ const Browse = () => {
     <div>
       <MainContainer />
       <SecondaryContainer />
-      {/* 
-    Main Container
-     -videoBackground
-     -video title
-    Secondary container
-     - Movies List *n
-       - Cards*n
-     
-     */}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { checkValidData } from "./../utils/validate";
 import { auth } from "../utils/firebase";
 import {
@@ -25,8 +25,13 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
   const email = useRef<HTMLInputElement>(null);
-
+  useEffect(() => {
+    if (isSignInForm) {
+      setState({ email: "savitha.netflix@gmail.com", password: "Netflix@123" });
+    }
+  }, [isSignInForm]);
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    // const target = e.target as HTMLInputElement;
     setState((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
   const loginHandler = () => {
@@ -80,7 +85,7 @@ const Login = () => {
     setState({ email: "", password: "", fullname: "" });
   };
   return (
-    <div className="my-0 mx-auto sm:w-[450px] bg-black bg-opacity-80">
+    <div className="my-0 mx-auto w-[300px] md:w-[450px] bg-black bg-opacity-80">
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}
         className="py-4 px-5 sm:max-w-[550px] h-auto flex flex-col"

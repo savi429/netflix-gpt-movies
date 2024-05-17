@@ -1,24 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { MovieType, TrailerType } from "./../types/App.types";
 
-type MovieType = {
-  id: number;
-  title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-};
-type TrailerType = {
-  id: string;
-  key: string;
-  type: string;
-};
-type stateType = {
+interface stateType {
   nowPlayingMovies: MovieType[];
   trailer: TrailerType;
   popularMovies: MovieType[];
   upComingMovies: MovieType[];
-};
+}
 const initialState: stateType = {
   nowPlayingMovies: [],
   trailer: { id: "", key: "", type: "" },

@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./../utils/firebase";
@@ -8,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
 import PageLayout from "./PageLayout";
 import DefaultUI from "./DefaultUI";
+import { MyComponentProps } from "../types/App.types";
 
-const Layout = ({ children }: { children: any }) => {
+const Layout = ({ children }: MyComponentProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {

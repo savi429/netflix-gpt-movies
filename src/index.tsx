@@ -1,6 +1,4 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -9,15 +7,18 @@ import Login from "./components/Login";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { useNavigate } from "react-router-dom";
-import { FC, ReactNode } from "react";
+import { ReactNode } from "react";
 import Browse from "./components/Browse";
-import Search from "./components/Search";
+import Search from "./components/Search/Search";
+import Watch from "./components/Movies/Watch";
+import "./index.css";
+
 interface AuthProps {
   children: ReactNode;
   type: "private" | "public";
 }
 
-const AuthComponent: FC<AuthProps> = ({ children, type }) => {
+const AuthComponent = ({ children, type }: AuthProps) => {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: RootState) => state.reducer.user?.uid);
 
@@ -58,6 +59,14 @@ const router = createBrowserRouter([
         element: (
           <AuthComponent type="private">
             <Search />
+          </AuthComponent>
+        ),
+      },
+      {
+        path: "/watch/:movieId",
+        element: (
+          <AuthComponent type="private">
+            <Watch />
           </AuthComponent>
         ),
       },

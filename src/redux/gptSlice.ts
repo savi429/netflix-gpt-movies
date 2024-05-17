@@ -1,15 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { MovieType } from "../types/App.types";
+
+interface SearchPayload {
+  searchResults: MovieType[];
+  movieNames: string[] | undefined;
+}
+const initialState: SearchPayload = {
+  searchResults: [],
+  movieNames: [],
+};
 
 const gptSlice = createSlice({
   name: "gpt",
-  initialState: {
-    searchResults: [],
-    movieNames: [],
-  },
+  initialState,
   reducers: {
-    addSearchResults: (state, action) => {
-      const { movieNames, tmbResult } = action.payload;
-      state.searchResults = tmbResult;
+    addSearchResults: (state, action: PayloadAction<SearchPayload>) => {
+      const { movieNames, searchResults } = action.payload;
+      state.searchResults = searchResults;
       state.movieNames = movieNames;
     },
   },

@@ -1,5 +1,5 @@
 import React from "react";
-import MovieList from "./MovieList";
+import MovieList from "./Movies/MovieList";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
@@ -14,20 +14,13 @@ const SecondaryContainer = () => {
     (store: RootState) => store.reducer.movies?.upComingMovies
   );
   return (
-    <div className="bg-black text-white pl-12">
-      <div className="absolute -mt-[20%]">
+    <div className="bg-black text-white">
+      <div className="-mt-[0px] md:-mt-48 relative z-20">
         <MovieList title={"Now Playing"} movies={movies} />
+        <MovieList title={"Popular"} movies={popularMovies} />
+        <MovieList title={"Up Coming"} movies={upComingMovies} />
+        <MovieList title={"trending"} movies={movies} />
       </div>
-      <MovieList title={"Popular"} movies={popularMovies} />
-      <MovieList title={"Up Coming"} movies={upComingMovies} />
-      <MovieList title={"trending"} movies={movies} />
-
-      {/* 
-    movies list -popular
-        - Movie car*n
-    movies list -trending
-    movies list -documented
-     */}
     </div>
   );
 };

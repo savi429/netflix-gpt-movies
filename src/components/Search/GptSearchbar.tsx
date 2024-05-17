@@ -1,13 +1,16 @@
-import React, { useRef } from "react";
-import lang from "../utils/languageConstants";
-import { options } from "../utils/constants";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import lang from "../../utils/languageConstants";
+import { options } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { openai } from "../utils/openai";
-import { addSearchResults } from "../redux/gptSlice";
+import { RootState } from "../../redux/store";
+import { openai } from "../../utils/openai";
+import { addSearchResults } from "../../redux/gptSlice";
+import { MovieType } from "../../types/App.types";
 
-const GptSearchbar = () => {
+const GptSearchbar = forwardRef<HTMLInputElement>((props, ref) => {
   const searchField = useRef<HTMLInputElement>(null);
+  useImperativeHandle(ref, () => searchField.current!);
+
   const dispatch = useDispatch();
   const langKey = useSelector((store: RootState) => store.reducer.config.lang);
 
@@ -46,10 +49,13 @@ const GptSearchbar = () => {
       const promisesList = moviesList?.map((movie: string) =>
         searchMoviesInTmdb(movie)
       );
-      const promiseResult = await Promise.all(promisesList!);
+      const promiseResult: MovieType[] = await Promise.all(promisesList!);
 
       dispatch(
-        addSearchResults({ movieNames: moviesList, tmbResult: promiseResult })
+        addSearchResults({
+          movieNames: moviesList,
+          searchResults: promiseResult,
+        })
       );
     }
   };
@@ -74,6 +80,6 @@ const GptSearchbar = () => {
       </form>
     </div>
   );
-};
+});
 
 export default GptSearchbar;

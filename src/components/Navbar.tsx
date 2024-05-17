@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "./../utils/firebase";
@@ -8,19 +8,37 @@ import { removeUser } from "../redux/userSlice";
 import { SUPPORTED_LANGUAGES, USER_LOGO } from "./../utils/constants";
 import { changeLanguage } from "../redux/configSlice";
 import { RootState } from "../redux/store";
+import { MdOutlineArrowDropDown } from "react-icons/md";
+import { IoSearch } from "react-icons/io5";
 const Navbar = () => {
   const dispatch = useDispatch();
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const langKey = useSelector((store: RootState) => store.reducer.config.lang);
   const [isOpen, setIsOpen] = useState(false);
   const handleUserDropDown = () => {
     setIsOpen(!isOpen);
   };
-  const handleMouseEnter = () => {
-    setIsOpen(true);
-  };
-  const handleMouseLeave = () => {
-    setIsOpen(false);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 150) {
+        setIsOpen(false);
+      }
+    };
+    const hadleClickOutSide = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        event.target instanceof Node &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", hadleClickOutSide);
+    document.addEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("mousedown", hadleClickOutSide);
+    };
+  }, []);
   const logout = () => {
     signOut(auth)
       .then(() => {
@@ -32,7 +50,7 @@ const Navbar = () => {
     dispatch(changeLanguage(e.target.value));
   };
   return (
-    <div className="z-10 p-6 bg-gradient-to-b from-black absolute text-white w-screen">
+    <div className="z-10 p-6 bg-gradient-to-b from-black absolute text-white overflow-hidden w-full">
       <nav className="flex justify-between ">
         <ul className="flex gap-4 items-center">
           <li>
@@ -50,19 +68,18 @@ const Navbar = () => {
           <li>
             <Link to="/newpopular">New & Popular</Link>
           </li>
-          <li>
-            <Link to="/mylist">My List</Link>
-          </li>
-          <li>
-            <Link to="/byLanguage">Browse by Languages</Link>
-          </li>
         </ul>
         <ul className="flex gap-5 items-center">
-          <li>
-            <Link to="/search">Search</Link>
+          <li
+          // onMouseEnter={handleMouseLeave}
+          >
+            <Link to="/search" className="flex">
+              <IoSearch size="1.5rem" />
+              &nbsp; Search
+            </Link>
           </li>
           <li>
-            <div className="relative mr-10">
+            <div className="relative ">
               <select
                 onChange={handleLanguageChange}
                 className="p-2 bg-gray m-2 bg-gray-500 text-white"
@@ -77,30 +94,44 @@ const Navbar = () => {
                   </option>
                 ))}
               </select>
-              {/* <div className="notifications absolute right-0 bg-black opacity-85 text-white cursor-pointer">
-                <ul>
-                  <li>Notification 1</li>
-                  <li>Notification 2</li>
-                </ul>
-              </div> */}
             </div>
           </li>
-          <li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <div onClick={handleUserDropDown} className="flex relative mr-5">
-              <img src={USER_LOGO} alt="user" width="20" height="20" />
-              <span>+</span>
-
+          <li>
+            <div className="relative">
+              <div className=" flex items-center" onClick={handleUserDropDown}>
+                <img
+                  src={USER_LOGO}
+                  alt="user"
+                  width="40"
+                  height="40"
+                  className="rounded-md"
+                />
+                <span>
+                  <MdOutlineArrowDropDown
+                    className={`transition transform ease-in-out duration-300 ${
+                      isOpen ? "rotate-180" : ""
+                    } w-6 h-6 `}
+                  />
+                </span>{" "}
+              </div>
               {isOpen && (
-                <div
-                  className=" bg-black bg-opacity-80 text-white px-5 absolute right-0 border border-white"
-                  id="userMenu"
-                >
-                  <ul className="text-md font-medium leading-6">
-                    <li>settings</li>
-                    <li>Profile</li>
-                    <hr />
-                    <li onClick={logout}>logout</li>
-                  </ul>
+                <div className="fixed right-5 mt-2 z-50 flex items-center justify-center">
+                  <div
+                    ref={dropdownRef}
+                    className="bg-black text-white px-5 te border border-gray-300 rounded shadow-md"
+                  >
+                    <ul className="text-md font-medium leading-8 mt-4">
+                      <li className="hover:text-green-500">settings</li>
+                      <li className="hover:text-bold">Profile</li>
+
+                      <li
+                        onClick={logout}
+                        className="border-t-4 hover:text-bold"
+                      >
+                        Sign out of Netflix
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               )}
             </div>
