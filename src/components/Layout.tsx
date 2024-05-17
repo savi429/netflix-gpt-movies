@@ -25,7 +25,7 @@ const Layout = ({ children }: MyComponentProps) => {
     });
     return () => unsubscribe();
     //unscubscribe when component unmounts
-  }, []);
+  }, [dispatch, navigate]);
   const isLoggedIn = useSelector(
     (state: RootState) => state?.reducer?.user?.uid
   );

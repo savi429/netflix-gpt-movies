@@ -6,7 +6,7 @@ type CardHoverProps = {
   hovered: boolean;
 };
 const MovieCardHover = ({ data, centerPosition, hovered }: CardHoverProps) => {
-  const { id, title, poster_path } = data;
+  const { title, poster_path } = data;
 
   let safeTranslateX = "-82px";
   let safeTranslateY = "-50px";
